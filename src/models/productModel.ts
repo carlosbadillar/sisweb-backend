@@ -1,8 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
-// Nota: Ahorita nos va a marcar error en la línea de abajo porque no hemos creado la conexión
-import sequelize from '../config/database'; 
+import { connection } from '../connection/connection'; 
 
-class Product extends Model {
+export class Product extends Model {
   public id!: number;
   public title!: string;
   public description!: string;
@@ -11,27 +10,17 @@ class Product extends Model {
 }
 
 Product.init({
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  description: {
-    type: DataTypes.TEXT
-  },
-  price: {
-    type: DataTypes.DOUBLE
-  },
-  stock: {
-    type: DataTypes.INTEGER
-  }
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.STRING },
+  price: { type: DataTypes.INTEGER },
+  discountPercentage: { type: DataTypes.INTEGER },
+  rating: { type: DataTypes.INTEGER },
+  stock: { type: DataTypes.INTEGER }
 }, {
-  sequelize,
-  modelName: 'Product'
+  sequelize: connection, 
+  modelName: 'Product',
+  tableName: 'Products'
 });
 
 export default Product;
